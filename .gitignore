@@ -1,0 +1,17 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# Environment Variables
+.env
+.DS_Store
+
+# Large video files
+*.mp4
+!web-app/public/traffic_dashboard.mp4

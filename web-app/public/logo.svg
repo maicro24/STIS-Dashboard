@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Black circle background -->
+  <circle cx="100" cy="100" r="95" fill="#1a1a2e"/>
+  
+  <!-- Traffic light body -->
+  <rect x="62" y="38" width="36" height="124" rx="18" fill="#4a4a5a"/>
+  
+  <!-- Traffic light arms/brackets - left -->
+  <rect x="38" y="55" width="24" height="6" rx="3" fill="#6a6a7a"/>
+  <rect x="38" y="97" width="24" height="6" rx="3" fill="#6a6a7a"/>
+  <rect x="38" y="139" width="24" height="6" rx="3" fill="#6a6a7a"/>
+  
+  <!-- Red light -->
+  <circle cx="80" cy="58" r="14" fill="#e84057"/>
+  <circle cx="80" cy="58" r="8" fill="#ff5f75" opacity="0.6"/>
+  
+  <!-- Orange/Yellow light -->
+  <circle cx="80" cy="100" r="14" fill="#f09030"/>
+  <circle cx="80" cy="100" r="8" fill="#ffaa50" opacity="0.6"/>
+  
+  <!-- Green light -->
+  <circle cx="80" cy="142" r="14" fill="#2ec4a0"/>
+  <circle cx="80" cy="142" r="8" fill="#50e8c0" opacity="0.6"/>
+  
+  <!-- Brain/Circuit right side -->
+  <!-- Main brain outline curves -->
+  <path d="M98 50 Q130 35 145 55 Q162 70 155 90 Q165 105 155 120 Q160 140 145 152 Q130 165 110 158 Q98 162 98 150" 
+        fill="none" stroke="#2ec4a0" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Circuit lines -->
+  <line x1="98" y1="58" x2="120" y2="58" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="120" y1="58" x2="135" y2="48" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="120" y1="58" x2="140" y2="65" stroke="#2ec4a0" stroke-width="2.5"/>
+  
+  <line x1="98" y1="80" x2="125" y2="80" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="125" y1="80" x2="148" y2="75" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="125" y1="80" x2="145" y2="90" stroke="#2ec4a0" stroke-width="2.5"/>
+  
+  <line x1="98" y1="100" x2="130" y2="100" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="130" y1="100" x2="152" y2="95" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="130" y1="100" x2="152" y2="108" stroke="#2ec4a0" stroke-width="2.5"/>
+  
+  <line x1="98" y1="120" x2="125" y2="120" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="125" y1="120" x2="148" y2="115" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="125" y1="120" x2="148" y2="130" stroke="#2ec4a0" stroke-width="2.5"/>
+  
+  <line x1="98" y1="142" x2="118" y2="142" stroke="#2ec4a0" stroke-width="2.5"/>
+  <line x1="118" y1="142" x2="135" y2="148" stroke="#2ec4a0" stroke-width="2.5"/>
+  
+  <!-- Circuit nodes -->
+  <circle cx="120" cy="58" r="3.5" fill="#2ec4a0"/>
+  <circle cx="135" cy="48" r="3" fill="#2ec4a0"/>
+  <circle cx="140" cy="65" r="3" fill="#2ec4a0"/>
+  <circle cx="125" cy="80" r="3.5" fill="#2ec4a0"/>
+  <circle cx="148" cy="75" r="3" fill="#2ec4a0"/>
+  <circle cx="145" cy="90" r="3" fill="#2ec4a0"/>
+  <circle cx="130" cy="100" r="3.5" fill="#2ec4a0"/>
+  <circle cx="152" cy="95" r="3" fill="#2ec4a0"/>
+  <circle cx="152" cy="108" r="3" fill="#2ec4a0"/>
+  <circle cx="125" cy="120" r="3.5" fill="#2ec4a0"/>
+  <circle cx="148" cy="115" r="3" fill="#2ec4a0"/>
+  <circle cx="148" cy="130" r="3" fill="#2ec4a0"/>
+  <circle cx="118" cy="142" r="3.5" fill="#2ec4a0"/>
+  <circle cx="135" cy="148" r="3" fill="#2ec4a0"/>
+  
+  <!-- Subtle glow effect -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#2ec4a0" stroke-width="2" opacity="0.15"/>
+</svg>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="apple-touch-icon" href="/logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="STIS - Smart Traffic Intelligence System. AI-powered traffic control and monitoring for the future of urban mobility." />
+  <meta name="keywords" content="traffic, AI, smart city, traffic control, traffic management, STIS" />
+  <meta name="author" content="STIS Team" />
+  <meta name="theme-color" content="#0a0a0f" />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="STIS - Smart Traffic Intelligence System" />
+  <meta property="og:description" content="AI-powered traffic control and monitoring platform" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;500;700&family=Cinzel:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          animation: {
+            'spin-slow': 'spin 3s linear infinite',
+            'pulse-neon': 'pulseNeon 2s ease-in-out infinite',
+          },
+          keyframes: {
+            pulseNeon: {
+              '0%, 100%': { boxShadow: '0 0 5px rgba(0, 245, 255, 0.4)' },
+              '50%': { boxShadow: '0 0 20px rgba(0, 245, 255, 0.6), 0 0 30px rgba(0, 245, 255, 0.4)' },
+            }
+          },
+          fontFamily: {
+            'display': ['Space Grotesk', 'sans-serif'],
+            'cinzel': ['Cinzel', 'serif'],
+          },
+          colors: {
+            'neon-primary': '#00f5ff',
+            'neon-secondary': '#b026ff',
+            'neon-green': '#39ff14',
+            'neon-red': '#ff073a',
+            'neon-orange': '#ff6600',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base Font Settings */
+    body {
+      font-family: 'Inter', sans-serif;
+      transition-property: color, background-color, border-color;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 300ms;
+    }
+
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Custom Scrollbar - Dark Mode */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Light Mode Scrollbar */
+    .light ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+    }
+
+    .light ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+
+  <title>STIS - Smart Traffic Intelligence System</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
