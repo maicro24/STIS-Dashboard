@@ -12,6 +12,8 @@ import {
     Hand,
     Activity,
     ArrowRight,
+    ArrowUp,
+    Brain,
     Rocket,
     StopCircle,
     TrendingUp

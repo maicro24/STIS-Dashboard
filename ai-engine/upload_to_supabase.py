@@ -134,7 +134,6 @@ def main():
             "vehicle_count": vehicle_count,
             "average_speed": round(speed, 2),
             "density": round(density, 3),
-            "predicted_density": round(predicted_density, 3),
             "congestion_level": get_congestion_level(density),
             "current_light": get_light_from_speed(speed),
             "timer_remaining": max(5, int(30 - density * 25)),
