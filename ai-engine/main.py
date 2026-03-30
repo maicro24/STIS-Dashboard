@@ -10,11 +10,17 @@ import json
 from ultralytics import YOLO
 import os
 from collections import deque
+import joblib  # Added for prediction model
 
 # ---------- CONFIG ----------
 VEHICLE_CLASS_IDS = {2, 3, 5, 7}  # car, motorcycle, bus, truck
 DEFAULT_CONF = 0.35
 DEFAULT_IMGSZ = 640
+
+# Prediction Config
+MODEL_DIR = os.path.dirname(os.path.abspath(__file__))
+PREDICTION_MODEL_PATH = os.path.join(MODEL_DIR, "traffic_model.joblib")
+WINDOW_SIZE = 20
 
 
 OUTPUT_JSON = "ui/traffic_data.json"
@@ -91,6 +97,7 @@ def main():
     parser.add_argument("--conf", type=float, default=DEFAULT_CONF, help="Confidence threshold")
     parser.add_argument("--imgsz", type=int, default=DEFAULT_IMGSZ, help="Input image size")
     parser.add_argument("--sample-rate", type=float, default=0.1, help="Data sample rate in seconds (default: 0.1s = 10 samples/sec)")
+    parser.add_argument("--max-frames", type=int, default=0, help="Maximum frames to process (0 for all)")
     args = parser.parse_args()
 
     cap = cv2.VideoCapture(args.video)
@@ -137,6 +144,15 @@ def main():
     print(f"   Output JSON: {OUTPUT_JSON}")
     print("=" * 60)
 
+    # Load prediction model if exists
+    predictor = None
+    if os.path.exists(PREDICTION_MODEL_PATH):
+        try:
+            predictor = joblib.load(PREDICTION_MODEL_PATH)
+            print(f"🔮 Traffic Predictor loaded: {PREDICTION_MODEL_PATH}")
+        except Exception as e:
+            print(f"⚠️  Could not load predictor: {e}")
+
     results_stream = model.track(
         source=args.video,
         conf=args.conf,
@@ -149,12 +165,16 @@ def main():
     frame_idx = 0
     prev_positions = {}
     speed_buffer = deque(maxlen=10)
+    # History for prediction features (vehicle_count, average_speed_kmh, density)
+    prediction_history = deque(maxlen=WINDOW_SIZE)
 
     for res in results_stream:
+        if args.max_frames > 0 and frame_idx >= args.max_frames:
+            break
+            
         frame_idx += 1
         img = res.orig_img
         boxes = res.boxes
-
         # Calculate precise time for this frame
         time_sec = round((frame_idx - 1) / fps, 3)
 
@@ -183,6 +203,7 @@ def main():
 
             # Vehicle is INSIDE zone - count it
             zone_vehicle_count += 1
+            conf = float(box.conf.cpu().numpy()[0]) * 100
 
             track_id = None
             if hasattr(box, "id") and box.id is not None:
@@ -209,9 +230,9 @@ def main():
             cv2.rectangle(overlay, (x1-2, y1-2), (x2+2, y2+2), (0, 245, 255), 4)
             cv2.addWeighted(overlay, 0.3, img, 0.7, 0, img)
             
-            # Show track ID if available
-            if track_id is not None:
-                cv2.putText(img, f"#{track_id}", (x1, y1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 255), 1)
+            # Show track ID and Accuracy if available
+            label = f"#{track_id} Acc:{conf:.0f}%" if track_id else f"Acc:{conf:.0f}%"
+            cv2.putText(img, label, (x1, y1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         prev_positions = current_positions
 
@@ -256,12 +277,31 @@ def main():
 
         # ===== SAVE DATA ROW (at sample rate) =====
         if frame_idx % frames_per_sample == 0 or frame_idx == 1:
+            # Update prediction history
+            current_features = [zone_vehicle_count, smoothed_speed, density]
+            prediction_history.append(current_features)
+            
+            # Run prediction if history is full
+            predicted_count = zone_vehicle_count
+            predicted_density = density
+            if predictor and len(prediction_history) == WINDOW_SIZE:
+                try:
+                    # Flatten history window for model input
+                    features_flat = np.array(list(prediction_history)).flatten().reshape(1, -1)
+                    pred = predictor.predict(features_flat)[0]
+                    predicted_count = max(0, round(float(pred[0]), 2))
+                    predicted_density = max(0.0, min(1.0, float(pred[1])))
+                except Exception as e:
+                    pass
+
             data_rows.append({
                 "time_sec": time_sec,
                 "frame": frame_idx,
                 "vehicle_count": zone_vehicle_count,
+                "predicted_vehicle_count": predicted_count,  # Added
                 "average_speed_kmh": round(smoothed_speed, 2),
                 "density": round(density, 3),
+                "predicted_density": round(predicted_density, 3),  # Added
                 "congestion_level": congestion,
                 "speed_variance": round(speed_var, 2),
                 "ai_action": ai_rec["action"],

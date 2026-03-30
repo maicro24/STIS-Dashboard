@@ -1,17 +1,35 @@
 # Python
-venv/
 __pycache__/
 *.pyc
-
-# Node.js
-node_modules/
+*.pyo
+*.pyd
+*.egg-info/
 dist/
 build/
+.venv/
+env/
 
-# Environment Variables
-.env
-.DS_Store
-
-# Large video files
+# Large AI/Video files (too big for GitHub)
+*.joblib
+*.onnx
+*.pt
 *.mp4
-!web-app/public/traffic_dashboard.mp4
+*.avi
+
+# Node
+node_modules/
+web-app/node_modules/
+web-app/dist/
+
+# Logs & temp
+*.log
+*.csv
+ai-engine/ui/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (keep supabase keys local only)
+.env
+.env.local

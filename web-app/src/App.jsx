@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { AlertProvider } from './components/AlertsPanel'
 import { SettingsProvider } from './components/SettingsPanel'
@@ -10,35 +9,20 @@ import './index.css'
 // Protected content wrapper
 const AppContent = () => {
   const { user, loading } = useAuth()
-  const [isDemoMode, setIsDemoMode] = useState(false)
-
-  useEffect(() => {
-    // Check for demo mode
-    const demoMode = localStorage.getItem('stis_demo_mode')
-    if (demoMode === 'true') {
-      setIsDemoMode(true)
-    }
-  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('stis_demo_mode')
-    setIsDemoMode(false)
+    window.location.reload()
   }
 
-  // Show loading spinner
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="spinner mx-auto mb-4" />
-          <p className="text-[var(--text-secondary)]">Loading STIS...</p>
-        </div>
-      </div>
-    )
-  }
+  // If Supabase is checking session, skip waiting and load dashboard immediately
+  // The dashboard itself connects to Supabase for data, so auth is not critical
+  const isDemoMode = localStorage.getItem('stis_demo_mode') !== 'false'
 
-  // Show auth or dashboard
-  if (user || isDemoMode) {
+  // Always go to dashboard directly - system is used for patent demo purposes
+  if (user || isDemoMode || loading) {
+    // Set demo mode so it persists across refreshes
+    if (!user) localStorage.setItem('stis_demo_mode', 'true')
     return <MapDashboard onLogout={handleLogout} />
   }
 

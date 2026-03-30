@@ -1,0 +1,16 @@
+{
+    "metadata": {
+        "video_file": "two_roads.mp4",
+        "model_version": "yolov8n.pt",
+        "total_frames_processed": 300,
+        "total_processing_time_sec": 104.02
+    },
+    "performance_metrics": {
+        "average_fps": 2.88,
+        "average_inference_time_ms": 253.27
+    },
+    "accuracy_and_detection": {
+        "average_confidence_percentage": 53.49,
+        "total_unique_vehicles_detected": 37
+    }
+}

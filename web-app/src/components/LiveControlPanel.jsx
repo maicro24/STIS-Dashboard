@@ -465,7 +465,7 @@ const LiveControlPanel = ({ camera, onClose }) => {
                                         <XAxis dataKey="time_sec" stroke="rgba(255,255,255,0.3)" tickFormatter={v => `${v}s`} />
                                         <YAxis stroke="rgba(255,255,255,0.3)" />
                                         <Tooltip contentStyle={{ background: 'rgba(0,0,0,0.8)', border: 'none' }} />
-                                        <Area type="monotone" dataKey="vehicle_count" stroke="#00f5ff" fill="url(#vGrad)" />
+                                        <Area type="monotone" dataKey="vehicle_count" stroke="#00f5ff" fill="url(#vGrad)" name="Vehicles" />
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
@@ -480,7 +480,8 @@ const LiveControlPanel = ({ camera, onClose }) => {
                                         <XAxis dataKey="time_sec" stroke="rgba(255,255,255,0.3)" tickFormatter={v => `${v}s`} />
                                         <YAxis stroke="rgba(255,255,255,0.3)" domain={[0, 1]} />
                                         <Tooltip contentStyle={{ background: 'rgba(0,0,0,0.8)', border: 'none' }} />
-                                        <Line type="monotone" dataKey="density" stroke="#b026ff" strokeWidth={2} dot={false} />
+                                        <Line type="monotone" dataKey="density" stroke="#b026ff" strokeWidth={2} dot={false} name="Actual" />
+                                        <Line type="monotone" dataKey="predicted_density" stroke="#ff073a" strokeWidth={2} strokeDasharray="3 3" dot={false} name="Predicted" />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>
@@ -521,6 +522,24 @@ const LiveControlPanel = ({ camera, onClose }) => {
                                     </div>
                                     <div className="h-2 bg-[var(--bg-dark)] rounded-full overflow-hidden">
                                         <div className="h-full rounded-full transition-all" style={{ width: `${current.density * 100}%`, backgroundColor: congestion.color }} />
+                                    </div>
+                                </div>
+                                <div className="p-4 rounded-xl bg-[rgba(255,165,0,0.05)] border border-[rgba(255,165,0,0.2)]">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <span className="text-xs font-semibold text-[rgba(255,165,0,0.8)] flex items-center gap-1">
+                                            <Brain size={12} /> AI DENSITY FORECAST (+3s)
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex flex-col">
+                                            <span className="text-xs text-[var(--text-muted)]">Current Density</span>
+                                            <span className="text-lg font-bold text-[var(--neon-primary)]">{(current.density * 100).toFixed(0)}%</span>
+                                        </div>
+                                        <div className="text-2xl text-[var(--text-muted)]">→</div>
+                                        <div className="flex flex-col text-right">
+                                            <span className="text-xs text-[var(--text-muted)]">Predicted Density</span>
+                                            <span className="text-lg font-bold text-[rgba(255,165,0,1)]">{((current.predicted_density || current.density) * 100).toFixed(0)}%</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -30,6 +30,8 @@ import AnalyticsDashboard from './AnalyticsDashboard'
 import AlertsPanel, { useAlerts } from './AlertsPanel'
 import SettingsPanel, { useSettings } from './SettingsPanel'
 import ThemeToggle from './ThemeToggle'
+import TrafficSimulation from './TrafficSimulation'
+import AI_PredictionWidget from './AI_PredictionWidget'
 
 // Custom marker icons
 const createCustomIcon = (status, isPrototype = false) => {
@@ -311,6 +313,7 @@ const MapDashboard = ({ onLogout }) => {
                         { id: 'overview', icon: Map, label: 'Map Overview' },
                         { id: 'analytics', icon: BarChart3, label: 'Analytics' },
                         { id: 'datalogs', icon: Database, label: 'Data Logs' },
+                        { id: 'simulation', icon: Zap, label: 'Simulation' },
                         { id: 'alerts', icon: Bell, label: 'Alerts', badge: unacknowledgedCount },
                         { id: 'settings', icon: Settings, label: 'Settings' },
                     ].map((item) => (
@@ -361,8 +364,15 @@ const MapDashboard = ({ onLogout }) => {
                     </div>
                 )}
 
+                {/* AI Prediction Widget (Global) */}
+                {sidebarOpen && (
+                    <div className="p-4 border-t border-[var(--border-dim)] animate-fade-in">
+                        <AI_PredictionWidget />
+                    </div>
+                )}
+
                 {/* User & Logout */}
-                <div className="p-4 border-t border-[var(--border-dim)]">
+                <div className="p-4 border-t border-[var(--border-dim)] mt-auto">
                     <div className={`flex items-center ${sidebarOpen ? 'gap-3' : 'justify-center'}`}>
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--neon-secondary)] to-[var(--neon-primary)] flex items-center justify-center flex-shrink-0">
                             <User size={18} className="text-[var(--bg-dark)]" />
@@ -413,6 +423,12 @@ const MapDashboard = ({ onLogout }) => {
                             <>
                                 <h2 className="text-xl font-bold">🗄️ <span className="neon-text">Data Logs</span></h2>
                                 <p className="text-sm text-[var(--text-muted)]">Real-time Supabase traffic records</p>
+                            </>
+                        )}
+                        {activeTab === 'simulation' && (
+                            <>
+                                <h2 className="text-xl font-bold">⚡ <span className="neon-text">Traffic Simulation</span></h2>
+                                <p className="text-sm text-[var(--text-muted)]">Interactive STIS vs Traditional comparison</p>
                             </>
                         )}
                         {activeTab === 'settings' && (
@@ -586,6 +602,13 @@ const MapDashboard = ({ onLogout }) => {
                 {activeTab === 'alerts' && (
                     <div className="flex-1 overflow-hidden bg-[var(--bg-dark)]">
                         <AlertsPanel />
+                    </div>
+                )}
+
+                {/* Simulation Tab */}
+                {activeTab === 'simulation' && (
+                    <div className="flex-1 overflow-hidden bg-[var(--bg-dark)]">
+                        <TrafficSimulation />
                     </div>
                 )}
 
