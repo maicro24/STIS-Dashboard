@@ -62,7 +62,6 @@ const exportCSV = (rows) => {
             r.vehicle_count ?? '',
             r.average_speed != null ? Number(r.average_speed).toFixed(1) : '',
             densityPct(r.density),
-            densityPct(r.predicted_density),
             r.congestion_level || '',
             r.current_light || '',
             `"${(r.ai_suggestion || '').replace(/"/g, "'")}"`,
@@ -116,7 +115,7 @@ const DataLogs = () => {
             const { data, error: sbError, count } = await supabase
                 .from('traffic_logs')
                 .select(
-                    'id, created_at, vehicle_count, average_speed, density, predicted_density, congestion_level, current_light, ai_suggestion',
+                    'id, created_at, vehicle_count, average_speed, density, congestion_level, current_light, ai_suggestion',
                     { count: 'exact' }
                 )
                 .order('created_at', { ascending: false })
@@ -279,7 +278,7 @@ const DataLogs = () => {
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                         <thead>
                             <tr style={{ background: '#0f172a', borderBottom: '2px solid #1e293b' }}>
-                                {['Timestamp', 'Box', 'Vehicles', 'Speed', 'Density', 'AI Prediction', 'Congestion', 'Traffic Light', 'AI Suggestion'].map(h => (
+                                {['Timestamp', 'Box', 'Vehicles', 'Speed', 'Density', 'Congestion', 'Traffic Light', 'AI Suggestion'].map(h => (
                                     <th key={h} style={{
                                         padding: '12px 16px', textAlign: 'left',
                                         fontSize: 11, fontWeight: 700,
@@ -299,8 +298,6 @@ const DataLogs = () => {
                             ) : rows.map((row, idx) => {
                                 const dp = densityPct(row.density)
                                 const badge = densityBadge(dp)
-                                const predPct = densityPct(row.predicted_density)
-                                const predBadge = densityBadge(predPct)
                                 const lb = lightBadge(row.current_light)
                                 const isNew = row.id === newRowId
                                 const isEven = idx % 2 === 0
@@ -360,18 +357,6 @@ const DataLogs = () => {
                                                     {dp}%
                                                 </span>
                                             </div>
-                                        </td>
-
-                                        {/* AI Prediction */}
-                                        <td style={{ padding: '11px 16px' }}>
-                                            <span style={{
-                                                display: 'flex', alignItems: 'center', gap: 5,
-                                                padding: '2px 8px', borderRadius: 5, fontSize: 11, fontWeight: 700, width: 'fit-content',
-                                                background: predBadge.bg, border: `1px solid ${predBadge.border}`, color: predBadge.color,
-                                            }}>
-                                                <Zap size={10} />
-                                                {predPct}%
-                                            </span>
                                         </td>
 
                                         {/* Congestion Level */}

@@ -22,7 +22,8 @@ import {
     Minus,
     Layers,
     Locate,
-    Mountain
+    Mountain,
+    Github
 } from 'lucide-react'
 import { cameraLocations, wilayaCenter } from '../data/trafficData'
 import LiveControlPanel from './LiveControlPanel'
@@ -379,7 +380,11 @@ const MapDashboard = ({ onLogout }) => {
                         </div>
                         {sidebarOpen && (
                             <div className="flex-1 min-w-0 animate-fade-in">
-                                <p className="text-sm font-medium truncate">Traffic Controller</p>
+                                <a href="https://github.com/maicro24/STIS-Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--neon-primary)] transition-colors block">
+                                    <p className="text-sm font-medium truncate flex items-center gap-1">
+                                        maicro <Github size={14} />
+                                    </p>
+                                </a>
                                 <p className="text-xs text-[var(--text-muted)]">Demo Mode</p>
                             </div>
                         )}

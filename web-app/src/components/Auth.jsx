@@ -200,7 +200,8 @@ const Auth = () => {
 
                 {/* Footer */}
                 <p className="text-center text-xs text-[var(--text-muted)] mt-8">
-                    © 2026 STIS - Smart Traffic Intelligence System
+                    © 2026 STIS - Smart Traffic Intelligence System<br />
+                    Developed by <a href="https://github.com/maicro24/STIS-Dashboard" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--neon-primary)] transition-colors inline-block mt-1">maicro</a>
                 </p>
             </div>
         </div>
