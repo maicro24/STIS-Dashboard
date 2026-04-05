@@ -308,8 +308,10 @@ const MapDashboard = ({ onLogout }) => {
                     </button>
                 </div>
 
-                {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2">
+                {/* Scrollable Content Area */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden">
+                    {/* Navigation */}
+                    <nav className="p-4 space-y-2">
                     {[
                         { id: 'overview', icon: Map, label: 'Map Overview' },
                         { id: 'analytics', icon: BarChart3, label: 'Analytics' },
@@ -367,10 +369,11 @@ const MapDashboard = ({ onLogout }) => {
 
                 {/* AI Prediction Widget (Global) */}
                 {sidebarOpen && (
-                    <div className="p-4 border-t border-[var(--border-dim)] animate-fade-in">
+                    <div className="p-4 border-t border-[var(--border-dim)] animate-fade-in mb-2">
                         <AI_PredictionWidget />
                     </div>
                 )}
+                </div>
 
                 {/* User & Logout */}
                 <div className="p-4 border-t border-[var(--border-dim)] mt-auto">
