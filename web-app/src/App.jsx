@@ -8,21 +8,25 @@ import './index.css'
 
 // Protected content wrapper
 const AppContent = () => {
-  const { user, loading } = useAuth()
+  const { user, loading, signOut } = useAuth()
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('stis_demo_mode')
+    if (user) await signOut()
     window.location.reload()
   }
 
-  // If Supabase is checking session, skip waiting and load dashboard immediately
-  // The dashboard itself connects to Supabase for data, so auth is not critical
-  const isDemoMode = localStorage.getItem('stis_demo_mode') !== 'false'
+  const isDemoMode = localStorage.getItem('stis_demo_mode') === 'true'
 
-  // Always go to dashboard directly - system is used for patent demo purposes
-  if (user || isDemoMode || loading) {
-    // Set demo mode so it persists across refreshes
-    if (!user) localStorage.setItem('stis_demo_mode', 'true')
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-dark)]">
+        <div className="spinner border-t-[var(--neon-primary)] w-12 h-12"></div>
+      </div>
+    )
+  }
+
+  if (user || isDemoMode) {
     return <MapDashboard onLogout={handleLogout} />
   }
 
